@@ -39,26 +39,28 @@ def score(data: dict) -> dict:
     data.number_people_liable = data.number_people_liable.astype("category")
 
     # Alternitavely, these features can be saved (pickled) and re-loaded
-    predictive_features = [
-        "installment_plans",
-        "job",
-        "number_people_liable",
-        "savings_account",
-        "debtors_guarantors",
-        "housing",
-        "credit_amount",
-        "installment_rate",
-        "credit_history",
-        "foreign_worker",
-        "number_existing_credits",
-        "purpose",
-        "telephone",
-        "present_residence_since",
-        "checking_status",
-        "duration_months",
-        "present_employment_since",
-        "property",
-    ]
+    predictive_features = sorted(
+        [
+            "checking_status",
+            "credit_amount",
+            "credit_history",
+            "debtors_guarantors",
+            "duration_months",
+            "foreign_worker",
+            "housing",
+            "installment_plans",
+            "installment_rate",
+            "job",
+            "number_existing_credits",
+            "number_people_liable",
+            "present_employment_since",
+            "present_residence_since",
+            "property",
+            "purpose",
+            "savings_account",
+            "telephone",
+        ]
+    )
 
     # Predict using saved model
     data["predicted_score"] = logreg_classifier.predict(data[predictive_features])
@@ -144,14 +146,14 @@ if __name__ == "__main__":
 
     # Test scoring/inferences
     score_sample = pandas.read_json(
-        "df_sample.json", orient="records", lines=True
+        "./data/df_sample.json", orient="records", lines=True
     ).iloc[0]
     print(pandas.DataFrame([score(score_sample)]))
     print()
 
     # Test batch metrics
     metrics_sample = pandas.read_json(
-        "df_sample_scored.json", orient="records", lines=True
+        "./data/df_sample_scored.json", orient="records", lines=True
     )
     bias = metrics(metrics_sample)
     print(pandas.DataFrame(bias["group_metrics"]))
