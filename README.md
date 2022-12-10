@@ -35,7 +35,7 @@ Model was trained on the German Credit Data dataset.
 
 ### Sample Inputs
 
-Choose a records (row) from one of the following files:
+Choose a record (row) from one of the following JSON-lines files:
  - `df_baseline.json`
  - `df_sample.json`
 
